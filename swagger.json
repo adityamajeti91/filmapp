@@ -1,0 +1,348 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Film App"
+    },
+    "host": "localhost:3001",
+    "basePath": "/api",
+    "tags": [{
+        "name": "Users",
+        "description": "User APIs"
+    }, {
+        "name": "Films",
+        "description": "Film APIs"
+    }],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+        "authorization": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create new user",                
+                "parameters": [{
+                    "name": "User",
+                    "in": "body",
+                    "description": "User that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/AddUser"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "New User is created",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "User Login",                
+                "parameters": [{
+                    "name": "Login",
+                    "in": "body",
+                    "description": "User Login",
+                    "schema": {
+                        "$ref": "#/definitions/LoginUser"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "New User is created",
+                        "schema": {
+                            "$ref": "#/definitions/LoginUserRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/films": {
+            "post": {
+                "tags": ["Films"],
+                "summary": "Create new Film/s",
+                "security": [{
+                    "authorization": []
+                }],
+                "parameters": [{
+                    "name": "Film",
+                    "in": "body",
+                    "description": "Film that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/AddFilm"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "New Film is created",
+                        "schema": {
+                            "$ref": "#/definitions/Film"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Films"],
+                "summary": "Get all Films",
+                "security": [{
+                    "authorization": []
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Films"
+                        }
+                    }
+                }
+            }
+        },
+        "/films/{id}": {
+            "parameters": [{
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID of film that we want to find",
+                "type": "string"
+            }],
+            "get": {
+                "summary": "Get film with given ID",
+                "security": [{
+                    "authorization": []
+                }],
+                "tags": ["Films"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Film"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update film with give ID",
+                "security": [{
+                    "authorization": []
+                }],
+                "tags": ["Films"],
+                "parameters": [{
+                    "name": "film",
+                    "in": "body",
+                    "description": "Film with new values of properties",
+                    "schema": {
+                        "$ref": "#/definitions/Film"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Film is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Film"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete film with given ID",
+                "security": [{
+                    "authorization": []
+                }],
+                "tags": ["Films"],
+                "responses": {
+                    "200": {
+                        "description": "Film is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Film"
+                        }
+                    }
+                }
+            }
+        },
+        "/films/{id}/comment": {
+            "parameters": [{
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID of film that we want to find",
+                "type": "string"
+            }],
+            "post": {
+                "tags": ["Films"],
+                "summary": "Create new Film comment",
+                "security": [{
+                    "authorization": []
+                }],
+                "parameters": [{
+                    "name": "Film Comment",
+                    "in": "body",
+                    "description": "Film comment that we want to create",
+                    "schema": {
+                        "$ref": "#/definitions/FilmComment"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "New Film comment is created",
+                        "schema": {
+                            "$ref": "#/definitions/FilmComment"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "LoginUser": {
+            "required": ["email", "password", "grant_type"],
+            "properties": {                
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "grant_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "LoginUserRes": {
+            "required": ["access_token", "refresh_token"],
+            "properties": {                
+                "access_token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "AddUser": {
+            "required": ["name",  "email", "password"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "required": ["_id", "name",  "email", "password"],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "createdDate": {
+                    "type": "string"
+                }
+            }
+        },
+        "AddFilm": {
+            "required": ["name",  "description", "realeaseDate", "rating", "ticketPrice", "country", "genre", "photo"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "realeaseDate": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "ticketPrice": {
+                    "type": "number"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "genre": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "Film": {
+            "required": ["_id", "name",  "description", "realeaseDate", "rating", "ticketPrice", "country", "genre", "photo"],
+            "properties": {
+                "_id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "realeaseDate": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "ticketPrice": {
+                    "type": "number"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "genre": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "Films": {
+            "type": "array",
+            "$ref": "#/definitions/Film"
+        },
+        "FilmComment": {
+            "required": ["comment"],
+            "properties": {
+                "comment": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

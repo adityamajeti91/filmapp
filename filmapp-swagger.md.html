@@ -1,0 +1,616 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>filmapp-swagger.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li><a href="#film-app-apis">Film App APIs</a>
+<ul>
+<li><a href="#index">INDEX</a></li>
+<li><a href="#user-model-schema">User Model Schema</a></li>
+<li><a href="#post-apiuserregister">POST /api/user/register</a></li>
+<li><a href="#post-apiuserlogin">POST /api/user/login</a></li>
+<li><a href="#film-model-schema">Film Model Schema</a></li>
+<li><a href="#post-apifilms">POST /api/films</a></li>
+<li><a href="#get-apifilms">GET /api/films</a></li>
+<li><a href="#get-apifilmsid">GET /api/films/{id}</a></li>
+<li><a href="#put-apifilmsid">PUT /api/films/{id}</a></li>
+<li><a href="#delete-apifilmsid">DELETE /api/films/{id}</a></li>
+<li><a href="#post-apifilmsidcomment">POST /api/films/{id}/comment</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h1 id="film-app-apis">Film App APIs</h1>
+<p><strong>Description</strong>: Describes Film App.</p>
+<h2 id="index">INDEX</h2>
+<p><a href="#user-model-schema">User Model Schema</a><br>
+<a href="#post-apiuserregister">Create User</a><br>
+<a href="#post-apiuserlogin">Login User</a></p>
+<p><a href="#film-model-schema">Film Model Schema</a><br>
+<a href="#post-apifilms">Create Films</a><br>
+<a href="#get-apifilms">Get Films</a><br>
+<a href="#get-apifilmsid">Get Film By Id</a><br>
+<a href="#put-apifilmsid">Update Film By Id</a><br>
+<a href="#delete-apifilmsid">Delete Film By Id</a><br>
+<a href="#post-apifilmsidcomment">Create FilmComment By Id</a></p>
+<h2 id="user-model-schema">User Model Schema</h2>
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Datatype</th>
+<th>Description</th>
+<th>Constrains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>name of user</td>
+<td>-</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>email of user</td>
+<td>-</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>password of user</td>
+<td>-</td>
+</tr>
+<tr>
+<td>createdDate</td>
+<td>string</td>
+<td>createdDate of user</td>
+<td>-</td>
+</tr>
+</tbody>
+</table><h2 id="post-apiuserregister">POST /api/user/register</h2>
+<p><strong>Description:</strong> Create User</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Payload</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>email</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Sample Payload:</strong></p>
+<pre><code>{
+    "name": "aditya",
+    "email": "aditya@gmail.com",
+    "password": "123456"
+}
+</code></pre>
+<p><strong>Response</strong></p>
+<p><strong>200</strong> : Request was successful</p>
+<pre><code>{
+    "_id": "611e2146df63d34624851ed2",
+    "name": "aditya",
+    "email": "aditya@gmail.com",
+    "createdDate": "2021-08-19T09:15:50.715Z"
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<p><strong>422</strong>: Unprocessable Entity</p>
+<pre><code>Input required
+</code></pre>
+<h2 id="post-apiuserlogin">POST /api/user/login</h2>
+<p><strong>Description:</strong> login User</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Payload</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>email</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>grant_type</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Sample Payload:</strong></p>
+<pre><code>{
+    "email": "aditya@gmail.com",
+    "password": "123456",
+    "grant_type": "password"
+}
+</code></pre>
+<p><strong>Response</strong></p>
+<p><strong>200</strong> : Request was successful</p>
+<pre><code>{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYxMTNjNjI0ZTUzYmI3MGMyMTkyZmNjYiIsIm5hbWUiOiJhZGl0eWEiLCJlbWFpbCI6ImFkaXR5YUBnbWFpbC5jb20ifSwiaWF0IjoxNjI5MzY0MzI3LCJleHAiOjE2MjkzNjc5Mjd9.VLYNfMiAjWuas5f2cTJQosE7zwybLPZupyKOIC-B_Xo",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYxMTNjNjI0ZTUzYmI3MGMyMTkyZmNjYiIsIm5hbWUiOiJhZGl0eWEiLCJlbWFpbCI6ImFkaXR5YUBnbWFpbC5jb20ifSwiaWF0IjoxNjI5MzY0MzI3LCJleHAiOjE2MjkzODU5Mjd9.Hy_royPe854wPU7saXPNlRasx-3D7ye68lHWbR678QI"
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<p><strong>422</strong>: Unprocessable Entity</p>
+<pre><code>Input required
+</code></pre>
+<h2 id="film-model-schema">Film Model Schema</h2>
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Datatype</th>
+<th>Description</th>
+<th>Constrains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>name of film</td>
+<td>-</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>description of film</td>
+<td>-</td>
+</tr>
+<tr>
+<td>realeaseDate</td>
+<td>date</td>
+<td>realease date and time</td>
+<td>-</td>
+</tr>
+<tr>
+<td>rating</td>
+<td>number</td>
+<td>rating of film</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ticketPrice</td>
+<td>number</td>
+<td>ticket price of film</td>
+<td>-</td>
+</tr>
+<tr>
+<td>country</td>
+<td>string</td>
+<td>country of film</td>
+<td>-</td>
+</tr>
+<tr>
+<td>genre</td>
+<td>array</td>
+<td>genre of film</td>
+<td>-</td>
+</tr>
+<tr>
+<td>photo</td>
+<td>string</td>
+<td>photo of film</td>
+<td>-</td>
+</tr>
+</tbody>
+</table><h2 id="post-apifilms">POST /api/films</h2>
+<p><strong>Description:</strong> Create films</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Payload</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>realeaseDate</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>rating</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ticketPrice</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>country</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>genre</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>photo</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Sample Payload:</strong>  (single film creation)</p>
+<pre><code>{
+    "name": "The Lord of the Ringsq",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-05T08:00:00",
+    "rating": 5,
+    "ticketPrice": 150,
+    "country": "USA",
+    "genre": ["Novel", "Fantasy Fiction"],
+    "photo": "url"
+}
+</code></pre>
+<p><strong>Sample Payload:</strong>  (multiple films creation)</p>
+<pre><code>[{
+    "name": "The Lord of the Rings",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-05T08:00:00",
+    "rating": 5,
+    "ticketPrice": 150,
+    "country": "USA",
+    "genre": ["Novel", "Fantasy Fiction"],
+    "photo": "url"
+}, {
+    "name": "The Lord of the Rings2",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-15T08:00:00",
+    "rating": 5,
+    "ticketPrice": 150,
+    "country": "USA",
+    "genre": ["Novel", "Fantasy Fiction"],
+    "photo": "url"
+}]
+</code></pre>
+<p><strong>Response</strong></p>
+<p><strong>200</strong> : Request was successful</p>
+<pre><code>{
+    "genre": [
+        "Novel",
+        "Fantasy Fiction"
+    ],
+    "_id": "611e0d07ea48f83acf2518e6",
+    "name": "The Lord of the Rings",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-05T02:30:00.000Z",
+    "rating": 3,
+    "ticketPrice": 150,
+    "country": "USA",
+    "photo": "url",
+    "__v": 0
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<p><strong>422</strong>: Unprocessable Entity</p>
+<pre><code>Input required
+</code></pre>
+<h2 id="get-apifilms">GET /api/films</h2>
+<p><strong>Description:</strong> Get films</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Response</strong></p>
+<p><strong>200</strong>: Request was successful</p>
+<pre><code>[{
+    "genre": [
+        "Novel",
+        "Fantasy Fiction"
+    ],
+    "_id": "611e0d07ea48f83acf2518e6",
+    "name": "The Lord of the Rings",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-05T02:30:00.000Z",
+    "rating": 3,
+    "ticketPrice": 150,
+    "country": "USA",
+    "photo": "url",
+    "__v": 0
+}]
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<h2 id="get-apifilmsid">GET /api/films/{id}</h2>
+<p><strong>Description:</strong> Get film by id</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Parameters</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td>id</td>
+<td>film id</td>
+<td><code>611e0d07ea48f83acf2518e6</code></td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Response</strong></p>
+<p><strong>200</strong>: Request was successful</p>
+<pre><code>{
+    "genre": [
+        "Novel",
+        "Fantasy Fiction"
+    ],
+    "_id": "611e0d07ea48f83acf2518e6",
+    "name": "The Lord of the Rings",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-05T02:30:00.000Z",
+    "rating": 3,
+    "ticketPrice": 150,
+    "country": "USA",
+    "photo": "url",
+    "__v": 0
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<h2 id="put-apifilmsid">PUT /api/films/{id}</h2>
+<p><strong>Description:</strong> Update film by id</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Parameters</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td>id</td>
+<td>film id</td>
+<td><code>611e0d07ea48f83acf2518e6</code></td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Payload</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_id</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>realeaseDate</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>rating</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ticketPrice</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>country</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>genre</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>photo</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Sample Payload</strong></p>
+<pre><code>{
+    "genre": [
+        "Novel",
+        "Fantasy Fiction"
+    ],
+    "_id": "611e0d07ea48f83acf2518e6",
+    "name": "The Lord of the Rings",
+    "description": "The Lord of the Rings",
+    "realeaseDate": "2021-07-05T02:30:00.000Z",
+    "rating": 3,
+    "ticketPrice": 150,
+    "country": "USA",
+    "photo": "url",
+    "__v": 0
+}
+</code></pre>
+<p><strong>Response</strong></p>
+<p><strong>200</strong>: Request was successful</p>
+<pre><code>{
+  "n": 1,
+  "nModified": 0,
+  "ok": 1
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<h2 id="delete-apifilmsid">DELETE /api/films/{id}</h2>
+<p><strong>Description:</strong> Delete film by id</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Parameters</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td>id</td>
+<td>film id</td>
+<td><code>611e0d07ea48f83acf2518e6</code></td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Response</strong></p>
+<p><strong>200</strong>: Request was successful</p>
+<pre><code>{
+  "n": 1,
+  "ok": 1,
+  "deletedCount": 1
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+<h2 id="post-apifilmsidcomment">POST /api/films/{id}/comment</h2>
+<p><strong>Description:</strong> Create films comment</p>
+<p><strong>Authentication:</strong> Required</p>
+<p><strong>Parameters</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td>id</td>
+<td>film id</td>
+<td><code>611e0d07ea48f83acf2518e6</code></td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Payload</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>comment</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p><strong>Sample Payload:</strong>  (single film creation)</p>
+<pre><code>{
+    "name": "The Lord of the Rings",
+    "comment": "super"
+}
+</code></pre>
+<p><strong>Response</strong></p>
+<p><strong>200</strong> : Request was successful</p>
+<pre><code>{
+    "_id": "611e0de1ea48f83acf2518e7",
+    "comment": "super",
+    "filmId": "611e0d07ea48f83acf2518e6",
+    "userId": "6113c624e53bb70c2192fccb",
+    "userName": "aditya",
+    "__v": 0
+}
+</code></pre>
+<p><strong>401</strong>: Unauthorized</p>
+<pre><code>Access Denied!
+</code></pre>
+
+    </div>
+  </div>
+</body>
+
+</html>
